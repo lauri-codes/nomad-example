@@ -1,0 +1,105 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = 'nomad_example'
+version = "1.0"
+description = "An example of a plugin repository for NOMAD."
+readme = "README.md"
+authors = [{ name = "The NOMAD Authors" }]
+license = { text = "Apache-2.0" }
+dependencies = [
+    "nomad-lab>=1.2.0"
+]
+
+[project.urls]
+repository = "https://github.com/lauri-codes/nomad-example-plugin"
+
+[project.optional-dependencies]
+dev = [
+    'ruff>=0.2.0',
+    'pytest'
+]
+    
+[tool.ruff]   
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Assume Python 3.9
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+   # isort
+    "I",
+    # pylint 
+    "PL"
+]
+
+ignore = [
+    "F403", # 'from module import *' used; unable to detect undefined names
+]
+    
+fixable = ["ALL"]
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# this is entirely optional, you can remove this if you wish to
+[tool.ruff.format]
+# use single quotes for strings.
+quote-style = "single"
+
+# indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.entry-points.'nomad.plugin']
+myparser = "nomad_example.parsers:myparser"
+mypackage = "nomad_example.schema_packages:mypackage"
+mynormalizer = "nomad_example.normalizers:mynormalizer"
+myapp = "nomad_example.apps:myapp"
